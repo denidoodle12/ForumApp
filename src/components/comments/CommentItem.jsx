@@ -1,13 +1,31 @@
-import { ThumbsUp, ThumbsDown } from 'lucide-react'
+import { useDispatch, useSelector } from 'react-redux'
 import { postedAt } from '../../utils'
+import { asyncToggleVoteComment } from '../../states/detailThread/action'
+import VoteButton from '../threads/VoteButton'
 
 function CommentItem({
+  id,
   content,
   createdAt,
   owner,
   upVotesBy = [],
   downVotesBy = [],
 }) {
+  const authUser = useSelector((state) => state.authUser)
+  const dispatch = useDispatch()
+
+  function onUpVote() {
+    dispatch(asyncToggleVoteComment({ commentId: id, voteType: 1 }))
+  }
+
+  function onDownVote() {
+    dispatch(asyncToggleVoteComment({ commentId: id, voteType: -1 }))
+  }
+
+  function onNeutralize() {
+    dispatch(asyncToggleVoteComment({ commentId: id, voteType: 0 }))
+  }
+
   return (
     <div className="comment-item-card">
       <div className="comment-header">
@@ -32,14 +50,14 @@ function CommentItem({
       />
 
       <div className="comment-footer">
-        <div className="stat-badge">
-          <ThumbsUp size={14} />
-          <span>{upVotesBy.length}</span>
-        </div>
-        <div className="stat-badge">
-          <ThumbsDown size={14} />
-          <span>{downVotesBy.length}</span>
-        </div>
+        <VoteButton
+          upVotesBy={upVotesBy}
+          downVotesBy={downVotesBy}
+          authUserId={authUser?.id}
+          onUpVote={onUpVote}
+          onDownVote={onDownVote}
+          onNeutralize={onNeutralize}
+        />
       </div>
     </div>
   )

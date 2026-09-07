@@ -5,9 +5,15 @@ import { Plus } from 'lucide-react'
 import { asyncPopulateUsersAndThreads } from '../states/threads/action'
 import ThreadList from '../components/threads/ThreadList'
 import ThreadInputModal from '../components/threads/ThreadInputModal'
+import CategoryFilter from '../components/threads/CategoryFilter'
 
 function HomePage() {
-  const { threads = [], users = [], authUser } = useSelector((state) => state)
+  const {
+    threads = [],
+    users = [],
+    authUser,
+    filterCategory = '',
+  } = useSelector((state) => state)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -24,10 +30,18 @@ function HomePage() {
     setIsModalOpen(true)
   }
 
+  const categories = [
+    ...new Set(threads.map((thread) => thread.category).filter(Boolean)),
+  ]
+
   const threadList = threads.map((thread) => ({
     ...thread,
     user: users.find((user) => user.id === thread.ownerId),
   }))
+
+  const filteredThreads = filterCategory
+    ? threadList.filter((thread) => thread.category === filterCategory)
+    : threadList
 
   return (
     <section className="home-page">
@@ -46,7 +60,9 @@ function HomePage() {
         </button>
       </div>
 
-      <ThreadList threads={threadList} />
+      <CategoryFilter categories={categories} />
+
+      <ThreadList threads={filteredThreads} />
 
       <ThreadInputModal
         isOpen={isModalOpen}

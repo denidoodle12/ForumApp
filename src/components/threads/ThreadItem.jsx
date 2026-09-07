@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom'
-import { MessageSquare, Tag, ThumbsUp, ThumbsDown } from 'lucide-react'
+import { useDispatch, useSelector } from 'react-redux'
+import { MessageSquare, Tag } from 'lucide-react'
 import { postedAt } from '../../utils'
+import { asyncToggleVoteThread } from '../../states/threads/action'
+import VoteButton from './VoteButton'
 
 function ThreadItem({
   id,
@@ -13,11 +16,26 @@ function ThreadItem({
   totalComments = 0,
   user,
 }) {
+  const authUser = useSelector((state) => state.authUser)
+  const dispatch = useDispatch()
+
   const strippedBody = body.replace(/<[^>]*>?/gm, '')
   const snippet =
     strippedBody.length > 180
       ? `${strippedBody.substring(0, 180)}...`
       : strippedBody
+
+  function onUpVote() {
+    dispatch(asyncToggleVoteThread({ threadId: id, voteType: 1 }))
+  }
+
+  function onDownVote() {
+    dispatch(asyncToggleVoteThread({ threadId: id, voteType: -1 }))
+  }
+
+  function onNeutralize() {
+    dispatch(asyncToggleVoteThread({ threadId: id, voteType: 0 }))
+  }
 
   return (
     <article className="thread-item-card">
@@ -52,14 +70,14 @@ function ThreadItem({
 
       <div className="thread-item-footer">
         <div className="thread-stats">
-          <div className="stat-badge">
-            <ThumbsUp size={15} />
-            <span>{upVotesBy.length}</span>
-          </div>
-          <div className="stat-badge">
-            <ThumbsDown size={15} />
-            <span>{downVotesBy.length}</span>
-          </div>
+          <VoteButton
+            upVotesBy={upVotesBy}
+            downVotesBy={downVotesBy}
+            authUserId={authUser?.id}
+            onUpVote={onUpVote}
+            onDownVote={onDownVote}
+            onNeutralize={onNeutralize}
+          />
           <Link to={`/threads/${id}`} className="stat-badge stat-link">
             <MessageSquare size={15} />
             <span>{totalComments} Komentar</span>

@@ -5,6 +5,8 @@ import usersReducer from './users/reducer'
 import loadingBarReducer from './loadingBar/reducer'
 import threadsReducer from './threads/reducer'
 import detailThreadReducer from './detailThread/reducer'
+import leaderboardsReducer from './leaderboards/reducer'
+import filterCategoryReducer from './filterCategory/reducer'
 
 const store = configureStore({
   reducer: {
@@ -14,8 +16,11 @@ const store = configureStore({
     loadingBar: loadingBarReducer,
     threads: threadsReducer,
     detailThread: detailThreadReducer,
+    leaderboards: leaderboardsReducer,
+    filterCategory: filterCategoryReducer,
   },
 })
 
 export default store
+
 

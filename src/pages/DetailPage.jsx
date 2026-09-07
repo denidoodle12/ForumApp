@@ -1,15 +1,19 @@
 import { useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { ArrowLeft, Tag, ThumbsUp, ThumbsDown } from 'lucide-react'
-import { asyncReceiveDetailThread } from '../states/detailThread/action'
+import { ArrowLeft, Tag } from 'lucide-react'
+import {
+  asyncReceiveDetailThread,
+  asyncToggleVoteDetailThread,
+} from '../states/detailThread/action'
 import { postedAt } from '../utils'
 import CommentInput from '../components/comments/CommentInput'
 import CommentList from '../components/comments/CommentList'
+import VoteButton from '../components/threads/VoteButton'
 
 function DetailPage() {
   const { id } = useParams()
-  const detailThread = useSelector((state) => state.detailThread)
+  const { detailThread, authUser } = useSelector((state) => state)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -22,6 +26,18 @@ function DetailPage() {
         <p>Memuat rincian diskusi...</p>
       </div>
     )
+  }
+
+  function onUpVote() {
+    dispatch(asyncToggleVoteDetailThread(1))
+  }
+
+  function onDownVote() {
+    dispatch(asyncToggleVoteDetailThread(-1))
+  }
+
+  function onNeutralize() {
+    dispatch(asyncToggleVoteDetailThread(0))
   }
 
   return (
@@ -64,16 +80,14 @@ function DetailPage() {
         />
 
         <footer className="detail-thread-footer">
-          <div className="thread-stats">
-            <div className="stat-badge">
-              <ThumbsUp size={15} />
-              <span>{detailThread.upVotesBy?.length || 0}</span>
-            </div>
-            <div className="stat-badge">
-              <ThumbsDown size={15} />
-              <span>{detailThread.downVotesBy?.length || 0}</span>
-            </div>
-          </div>
+          <VoteButton
+            upVotesBy={detailThread.upVotesBy || []}
+            downVotesBy={detailThread.downVotesBy || []}
+            authUserId={authUser?.id}
+            onUpVote={onUpVote}
+            onDownVote={onDownVote}
+            onNeutralize={onNeutralize}
+          />
         </footer>
       </article>
 
