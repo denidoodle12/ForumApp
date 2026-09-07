@@ -3,6 +3,8 @@ import authUserReducer from './authUser/reducer'
 import isPreloadReducer from './isPreload/reducer'
 import usersReducer from './users/reducer'
 import loadingBarReducer from './loadingBar/reducer'
+import threadsReducer from './threads/reducer'
+import detailThreadReducer from './detailThread/reducer'
 
 const store = configureStore({
   reducer: {
@@ -10,7 +12,10 @@ const store = configureStore({
     isPreload: isPreloadReducer,
     users: usersReducer,
     loadingBar: loadingBarReducer,
+    threads: threadsReducer,
+    detailThread: detailThreadReducer,
   },
 })
 
 export default store
+
