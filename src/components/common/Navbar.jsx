@@ -1,15 +1,15 @@
-import { Link, useLocation } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
-import { MessageSquare, Trophy, LogOut, MessagesSquare } from 'lucide-react'
-import { asyncUnsetAuthUser } from '../../states/authUser/action'
+import { Link, useLocation } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { MessageSquare, Trophy, LogOut, MessagesSquare } from 'lucide-react';
+import { asyncUnsetAuthUser } from '../../states/authUser/action';
 
 function Navbar() {
-  const { authUser } = useSelector((state) => state)
-  const dispatch = useDispatch()
-  const location = useLocation()
+  const { authUser } = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const location = useLocation();
 
   function onLogout() {
-    dispatch(asyncUnsetAuthUser())
+    dispatch(asyncUnsetAuthUser());
   }
 
   return (
@@ -72,7 +72,7 @@ function Navbar() {
         </div>
       </div>
     </header>
-  )
+  );
 }
 
-export default Navbar
+export default Navbar;

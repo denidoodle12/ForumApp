@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import { Plus } from 'lucide-react'
-import { asyncPopulateUsersAndThreads } from '../states/threads/action'
-import ThreadList from '../components/threads/ThreadList'
-import ThreadInputModal from '../components/threads/ThreadInputModal'
-import CategoryFilter from '../components/threads/CategoryFilter'
+import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { Plus } from 'lucide-react';
+import { asyncPopulateUsersAndThreads } from '../states/threads/action';
+import ThreadList from '../components/threads/ThreadList';
+import ThreadInputModal from '../components/threads/ThreadInputModal';
+import CategoryFilter from '../components/threads/CategoryFilter';
 
 function HomePage() {
   const {
@@ -13,35 +13,35 @@ function HomePage() {
     users = [],
     authUser,
     filterCategory = '',
-  } = useSelector((state) => state)
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  } = useSelector((state) => state);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(asyncPopulateUsersAndThreads())
-  }, [dispatch])
+    dispatch(asyncPopulateUsersAndThreads());
+  }, [dispatch]);
 
   function onAddThreadClick() {
     if (!authUser) {
-      navigate('/login')
-      return
+      navigate('/login');
+      return;
     }
-    setIsModalOpen(true)
+    setIsModalOpen(true);
   }
 
   const categories = [
     ...new Set(threads.map((thread) => thread.category).filter(Boolean)),
-  ]
+  ];
 
   const threadList = threads.map((thread) => ({
     ...thread,
     user: users.find((user) => user.id === thread.ownerId),
-  }))
+  }));
 
   const filteredThreads = filterCategory
     ? threadList.filter((thread) => thread.category === filterCategory)
-    : threadList
+    : threadList;
 
   return (
     <section className="home-page">
@@ -69,7 +69,7 @@ function HomePage() {
         onClose={() => setIsModalOpen(false)}
       />
     </section>
-  )
+  );
 }
 
-export default HomePage
+export default HomePage;

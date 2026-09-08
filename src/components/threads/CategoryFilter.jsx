@@ -1,20 +1,20 @@
-import { useSelector, useDispatch } from 'react-redux'
-import { setFilterCategoryActionCreator } from '../../states/filterCategory/action'
+import { useSelector, useDispatch } from 'react-redux';
+import { setFilterCategoryActionCreator } from '../../states/filterCategory/action';
 
 function CategoryFilter({ categories = [] }) {
-  const filterCategory = useSelector((state) => state.filterCategory)
-  const dispatch = useDispatch()
+  const filterCategory = useSelector((state) => state.filterCategory);
+  const dispatch = useDispatch();
 
   function onSelectCategory(category) {
     if (filterCategory === category) {
-      dispatch(setFilterCategoryActionCreator(''))
+      dispatch(setFilterCategoryActionCreator(''));
     } else {
-      dispatch(setFilterCategoryActionCreator(category))
+      dispatch(setFilterCategoryActionCreator(category));
     }
   }
 
   if (categories.length === 0) {
-    return null
+    return null;
   }
 
   return (
@@ -42,7 +42,7 @@ function CategoryFilter({ categories = [] }) {
         ))}
       </div>
     </div>
-  )
+  );
 }
 
-export default CategoryFilter
+export default CategoryFilter;

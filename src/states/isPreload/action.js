@@ -1,13 +1,13 @@
-import api from '../../api/dicodingForum'
-import { setAuthUserActionCreator } from '../authUser/action'
+import api from '../../api/dicodingForum';
+import { setAuthUserActionCreator } from '../authUser/action';
 import {
   showLoadingActionCreator,
   hideLoadingActionCreator,
-} from '../loadingBar/action'
+} from '../loadingBar/action';
 
 const ActionType = {
   SET_IS_PRELOAD: 'isPreload/set',
-}
+};
 
 function setIsPreloadActionCreator(isPreload) {
   return {
@@ -15,26 +15,26 @@ function setIsPreloadActionCreator(isPreload) {
     payload: {
       isPreload,
     },
-  }
+  };
 }
 
 function asyncPreloadProcess() {
   return async (dispatch) => {
-    dispatch(showLoadingActionCreator())
+    dispatch(showLoadingActionCreator());
     try {
-      const authUser = await api.getOwnProfile()
-      dispatch(setAuthUserActionCreator(authUser))
+      const authUser = await api.getOwnProfile();
+      dispatch(setAuthUserActionCreator(authUser));
     } catch {
-      dispatch(setAuthUserActionCreator(null))
+      dispatch(setAuthUserActionCreator(null));
     } finally {
-      dispatch(setIsPreloadActionCreator(false))
-      dispatch(hideLoadingActionCreator())
+      dispatch(setIsPreloadActionCreator(false));
+      dispatch(hideLoadingActionCreator());
     }
-  }
+  };
 }
 
 export {
   ActionType,
   setIsPreloadActionCreator,
   asyncPreloadProcess,
-}
+};

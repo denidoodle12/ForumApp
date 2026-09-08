@@ -1,43 +1,43 @@
-import { useEffect } from 'react'
-import { useParams, Link } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
-import { ArrowLeft, Tag } from 'lucide-react'
+import { useEffect } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { ArrowLeft, Tag } from 'lucide-react';
 import {
   asyncReceiveDetailThread,
   asyncToggleVoteDetailThread,
-} from '../states/detailThread/action'
-import { postedAt } from '../utils'
-import CommentInput from '../components/comments/CommentInput'
-import CommentList from '../components/comments/CommentList'
-import VoteButton from '../components/threads/VoteButton'
+} from '../states/detailThread/action';
+import { postedAt } from '../utils';
+import CommentInput from '../components/comments/CommentInput';
+import CommentList from '../components/comments/CommentList';
+import VoteButton from '../components/threads/VoteButton';
 
 function DetailPage() {
-  const { id } = useParams()
-  const { detailThread, authUser } = useSelector((state) => state)
-  const dispatch = useDispatch()
+  const { id } = useParams();
+  const { detailThread, authUser } = useSelector((state) => state);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(asyncReceiveDetailThread(id))
-  }, [id, dispatch])
+    dispatch(asyncReceiveDetailThread(id));
+  }, [id, dispatch]);
 
   if (!detailThread) {
     return (
       <div className="empty-state">
         <p>Memuat rincian diskusi...</p>
       </div>
-    )
+    );
   }
 
   function onUpVote() {
-    dispatch(asyncToggleVoteDetailThread(1))
+    dispatch(asyncToggleVoteDetailThread(1));
   }
 
   function onDownVote() {
-    dispatch(asyncToggleVoteDetailThread(-1))
+    dispatch(asyncToggleVoteDetailThread(-1));
   }
 
   function onNeutralize() {
-    dispatch(asyncToggleVoteDetailThread(0))
+    dispatch(asyncToggleVoteDetailThread(0));
   }
 
   return (
@@ -97,7 +97,7 @@ function DetailPage() {
         <CommentList comments={detailThread.comments} />
       </section>
     </section>
-  )
+  );
 }
 
-export default DetailPage
+export default DetailPage;

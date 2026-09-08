@@ -1,27 +1,27 @@
-import { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { X } from 'lucide-react'
-import { asyncAddThread } from '../../states/threads/action'
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { X } from 'lucide-react';
+import { asyncAddThread } from '../../states/threads/action';
 
 function ThreadInputModal({ isOpen, onClose }) {
-  const [title, setTitle] = useState('')
-  const [category, setCategory] = useState('')
-  const [body, setBody] = useState('')
+  const [title, setTitle] = useState('');
+  const [category, setCategory] = useState('');
+  const [body, setBody] = useState('');
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   if (!isOpen) {
-    return null
+    return null;
   }
 
   async function onSubmit(event) {
-    event.preventDefault()
-    const success = await dispatch(asyncAddThread({ title, body, category }))
+    event.preventDefault();
+    const success = await dispatch(asyncAddThread({ title, body, category }));
     if (success) {
-      setTitle('')
-      setCategory('')
-      setBody('')
-      onClose()
+      setTitle('');
+      setCategory('');
+      setBody('');
+      onClose();
     }
   }
 
@@ -100,7 +100,7 @@ function ThreadInputModal({ isOpen, onClose }) {
         </form>
       </div>
     </div>
-  )
+  );
 }
 
-export default ThreadInputModal
+export default ThreadInputModal;

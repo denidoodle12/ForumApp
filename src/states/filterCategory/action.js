@@ -1,6 +1,6 @@
 const ActionType = {
   SET_FILTER_CATEGORY: 'filterCategory/set',
-}
+};
 
 function setFilterCategoryActionCreator(category) {
   return {
@@ -8,10 +8,10 @@ function setFilterCategoryActionCreator(category) {
     payload: {
       category,
     },
-  }
+  };
 }
 
 export {
   ActionType,
   setFilterCategoryActionCreator,
-}
+};

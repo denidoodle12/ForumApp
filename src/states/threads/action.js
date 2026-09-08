@@ -1,15 +1,15 @@
-import api from '../../api/dicodingForum'
-import { receiveUsersActionCreator } from '../users/action'
+import api from '../../api/dicodingForum';
+import { receiveUsersActionCreator } from '../users/action';
 import {
   showLoadingActionCreator,
   hideLoadingActionCreator,
-} from '../loadingBar/action'
+} from '../loadingBar/action';
 
 const ActionType = {
   RECEIVE_THREADS: 'threads/receive',
   ADD_THREAD: 'threads/add',
   TOGGLE_VOTE_THREAD: 'threads/toggleVote',
-}
+};
 
 function receiveThreadsActionCreator(threads) {
   return {
@@ -17,7 +17,7 @@ function receiveThreadsActionCreator(threads) {
     payload: {
       threads,
     },
-  }
+  };
 }
 
 function addThreadActionCreator(thread) {
@@ -26,7 +26,7 @@ function addThreadActionCreator(thread) {
     payload: {
       thread,
     },
-  }
+  };
 }
 
 function toggleVoteThreadActionCreator({ threadId, userId, voteType }) {
@@ -37,57 +37,57 @@ function toggleVoteThreadActionCreator({ threadId, userId, voteType }) {
       userId,
       voteType,
     },
-  }
+  };
 }
 
 function asyncPopulateUsersAndThreads() {
   return async (dispatch) => {
-    dispatch(showLoadingActionCreator())
+    dispatch(showLoadingActionCreator());
     try {
       const [users, threads] = await Promise.all([
         api.getAllUsers(),
         api.getAllThreads(),
-      ])
-      dispatch(receiveUsersActionCreator(users))
-      dispatch(receiveThreadsActionCreator(threads))
+      ]);
+      dispatch(receiveUsersActionCreator(users));
+      dispatch(receiveThreadsActionCreator(threads));
     } catch (error) {
-      alert(error.message)
+      alert(error.message);
     } finally {
-      dispatch(hideLoadingActionCreator())
+      dispatch(hideLoadingActionCreator());
     }
-  }
+  };
 }
 
 function asyncAddThread({ title, body, category = '' }) {
   return async (dispatch) => {
-    dispatch(showLoadingActionCreator())
+    dispatch(showLoadingActionCreator());
     try {
-      const thread = await api.createThread({ title, body, category })
-      dispatch(addThreadActionCreator(thread))
-      return true
+      const thread = await api.createThread({ title, body, category });
+      dispatch(addThreadActionCreator(thread));
+      return true;
     } catch (error) {
-      alert(error.message)
-      return false
+      alert(error.message);
+      return false;
     } finally {
-      dispatch(hideLoadingActionCreator())
+      dispatch(hideLoadingActionCreator());
     }
-  }
+  };
 }
 
 function asyncToggleVoteThread({ threadId, voteType }) {
   return async (dispatch, getState) => {
-    const { authUser, threads } = getState()
+    const { authUser, threads } = getState();
     if (!authUser) {
-      alert('Silakan masuk terlebih dahulu untuk melakukan vote.')
-      return
+      alert('Silakan masuk terlebih dahulu untuk melakukan vote.');
+      return;
     }
 
-    const thread = threads.find((t) => t.id === threadId)
-    if (!thread) return
+    const thread = threads.find((t) => t.id === threadId);
+    if (!thread) return;
 
-    const wasUpvoted = thread.upVotesBy.includes(authUser.id)
-    const wasDownvoted = thread.downVotesBy.includes(authUser.id)
-    const previousVoteType = wasUpvoted ? 1 : wasDownvoted ? -1 : 0
+    const wasUpvoted = thread.upVotesBy.includes(authUser.id);
+    const wasDownvoted = thread.downVotesBy.includes(authUser.id);
+    const previousVoteType = wasUpvoted ? 1 : wasDownvoted ? -1 : 0;
 
     dispatch(
       toggleVoteThreadActionCreator({
@@ -95,15 +95,15 @@ function asyncToggleVoteThread({ threadId, voteType }) {
         userId: authUser.id,
         voteType,
       })
-    )
+    );
 
     try {
       if (voteType === 1) {
-        await api.upVoteThread(threadId)
+        await api.upVoteThread(threadId);
       } else if (voteType === -1) {
-        await api.downVoteThread(threadId)
+        await api.downVoteThread(threadId);
       } else {
-        await api.neutralizeVoteThread(threadId)
+        await api.neutralizeVoteThread(threadId);
       }
     } catch (error) {
       dispatch(
@@ -112,10 +112,10 @@ function asyncToggleVoteThread({ threadId, voteType }) {
           userId: authUser.id,
           voteType: previousVoteType,
         })
-      )
-      alert(error.message)
+      );
+      alert(error.message);
     }
-  }
+  };
 }
 
 export {
@@ -126,4 +126,4 @@ export {
   asyncPopulateUsersAndThreads,
   asyncAddThread,
   asyncToggleVoteThread,
-}
+};

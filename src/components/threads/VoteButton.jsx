@@ -1,4 +1,4 @@
-import { ThumbsUp, ThumbsDown } from 'lucide-react'
+import { ThumbsUp, ThumbsDown } from 'lucide-react';
 
 function VoteButton({
   upVotesBy = [],
@@ -8,22 +8,22 @@ function VoteButton({
   onDownVote,
   onNeutralize,
 }) {
-  const isUpvoted = authUserId ? upVotesBy.includes(authUserId) : false
-  const isDownvoted = authUserId ? downVotesBy.includes(authUserId) : false
+  const isUpvoted = authUserId ? upVotesBy.includes(authUserId) : false;
+  const isDownvoted = authUserId ? downVotesBy.includes(authUserId) : false;
 
   function handleUpVote() {
     if (isUpvoted) {
-      onNeutralize()
+      onNeutralize();
     } else {
-      onUpVote()
+      onUpVote();
     }
   }
 
   function handleDownVote() {
     if (isDownvoted) {
-      onNeutralize()
+      onNeutralize();
     } else {
-      onDownVote()
+      onDownVote();
     }
   }
 
@@ -49,7 +49,7 @@ function VoteButton({
         <span>{downVotesBy.length}</span>
       </button>
     </div>
-  )
+  );
 }
 
-export default VoteButton
+export default VoteButton;

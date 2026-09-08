@@ -1,18 +1,18 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
-import { asyncAddComment } from '../../states/detailThread/action'
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { asyncAddComment } from '../../states/detailThread/action';
 
 function CommentInput({ threadId }) {
-  const [content, setContent] = useState('')
-  const authUser = useSelector((state) => state.authUser)
-  const dispatch = useDispatch()
+  const [content, setContent] = useState('');
+  const authUser = useSelector((state) => state.authUser);
+  const dispatch = useDispatch();
 
   async function onSubmit(event) {
-    event.preventDefault()
-    const success = await dispatch(asyncAddComment({ threadId, content }))
+    event.preventDefault();
+    const success = await dispatch(asyncAddComment({ threadId, content }));
     if (success) {
-      setContent('')
+      setContent('');
     }
   }
 
@@ -27,7 +27,7 @@ function CommentInput({ threadId }) {
           terlebih dahulu.
         </p>
       </div>
-    )
+    );
   }
 
   return (
@@ -47,7 +47,7 @@ function CommentInput({ threadId }) {
         </button>
       </div>
     </form>
-  )
+  );
 }
 
-export default CommentInput
+export default CommentInput;

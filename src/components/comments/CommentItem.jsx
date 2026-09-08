@@ -1,7 +1,7 @@
-import { useDispatch, useSelector } from 'react-redux'
-import { postedAt } from '../../utils'
-import { asyncToggleVoteComment } from '../../states/detailThread/action'
-import VoteButton from '../threads/VoteButton'
+import { useDispatch, useSelector } from 'react-redux';
+import { postedAt } from '../../utils';
+import { asyncToggleVoteComment } from '../../states/detailThread/action';
+import VoteButton from '../threads/VoteButton';
 
 function CommentItem({
   id,
@@ -11,19 +11,19 @@ function CommentItem({
   upVotesBy = [],
   downVotesBy = [],
 }) {
-  const authUser = useSelector((state) => state.authUser)
-  const dispatch = useDispatch()
+  const authUser = useSelector((state) => state.authUser);
+  const dispatch = useDispatch();
 
   function onUpVote() {
-    dispatch(asyncToggleVoteComment({ commentId: id, voteType: 1 }))
+    dispatch(asyncToggleVoteComment({ commentId: id, voteType: 1 }));
   }
 
   function onDownVote() {
-    dispatch(asyncToggleVoteComment({ commentId: id, voteType: -1 }))
+    dispatch(asyncToggleVoteComment({ commentId: id, voteType: -1 }));
   }
 
   function onNeutralize() {
-    dispatch(asyncToggleVoteComment({ commentId: id, voteType: 0 }))
+    dispatch(asyncToggleVoteComment({ commentId: id, voteType: 0 }));
   }
 
   return (
@@ -60,7 +60,7 @@ function CommentItem({
         />
       </div>
     </div>
-  )
+  );
 }
 
-export default CommentItem
+export default CommentItem;

@@ -1,12 +1,12 @@
-import api from '../../api/dicodingForum'
+import api from '../../api/dicodingForum';
 import {
   showLoadingActionCreator,
   hideLoadingActionCreator,
-} from '../loadingBar/action'
+} from '../loadingBar/action';
 
 const ActionType = {
   RECEIVE_LEADERBOARDS: 'leaderboards/receive',
-}
+};
 
 function receiveLeaderboardsActionCreator(leaderboards) {
   return {
@@ -14,25 +14,25 @@ function receiveLeaderboardsActionCreator(leaderboards) {
     payload: {
       leaderboards,
     },
-  }
+  };
 }
 
 function asyncReceiveLeaderboards() {
   return async (dispatch) => {
-    dispatch(showLoadingActionCreator())
+    dispatch(showLoadingActionCreator());
     try {
-      const leaderboards = await api.getLeaderboards()
-      dispatch(receiveLeaderboardsActionCreator(leaderboards))
+      const leaderboards = await api.getLeaderboards();
+      dispatch(receiveLeaderboardsActionCreator(leaderboards));
     } catch (error) {
-      alert(error.message)
+      alert(error.message);
     } finally {
-      dispatch(hideLoadingActionCreator())
+      dispatch(hideLoadingActionCreator());
     }
-  }
+  };
 }
 
 export {
   ActionType,
   receiveLeaderboardsActionCreator,
   asyncReceiveLeaderboards,
-}
+};

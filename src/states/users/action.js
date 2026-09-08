@@ -1,12 +1,12 @@
-import api from '../../api/dicodingForum'
+import api from '../../api/dicodingForum';
 import {
   showLoadingActionCreator,
   hideLoadingActionCreator,
-} from '../loadingBar/action'
+} from '../loadingBar/action';
 
 const ActionType = {
   RECEIVE_USERS: 'users/receive',
-}
+};
 
 function receiveUsersActionCreator(users) {
   return {
@@ -14,25 +14,25 @@ function receiveUsersActionCreator(users) {
     payload: {
       users,
     },
-  }
+  };
 }
 
 function asyncReceiveUsers() {
   return async (dispatch) => {
-    dispatch(showLoadingActionCreator())
+    dispatch(showLoadingActionCreator());
     try {
-      const users = await api.getAllUsers()
-      dispatch(receiveUsersActionCreator(users))
+      const users = await api.getAllUsers();
+      dispatch(receiveUsersActionCreator(users));
     } catch (error) {
-      alert(error.message)
+      alert(error.message);
     } finally {
-      dispatch(hideLoadingActionCreator())
+      dispatch(hideLoadingActionCreator());
     }
-  }
+  };
 }
 
 export {
   ActionType,
   receiveUsersActionCreator,
   asyncReceiveUsers,
-}
+};

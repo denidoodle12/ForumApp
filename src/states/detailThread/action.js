@@ -1,8 +1,8 @@
-import api from '../../api/dicodingForum'
+import api from '../../api/dicodingForum';
 import {
   showLoadingActionCreator,
   hideLoadingActionCreator,
-} from '../loadingBar/action'
+} from '../loadingBar/action';
 
 const ActionType = {
   RECEIVE_DETAIL_THREAD: 'detailThread/receive',
@@ -10,7 +10,7 @@ const ActionType = {
   ADD_COMMENT: 'detailThread/addComment',
   TOGGLE_VOTE_DETAIL_THREAD: 'detailThread/toggleVote',
   TOGGLE_VOTE_COMMENT: 'detailThread/toggleVoteComment',
-}
+};
 
 function receiveDetailThreadActionCreator(detailThread) {
   return {
@@ -18,13 +18,13 @@ function receiveDetailThreadActionCreator(detailThread) {
     payload: {
       detailThread,
     },
-  }
+  };
 }
 
 function clearDetailThreadActionCreator() {
   return {
     type: ActionType.CLEAR_DETAIL_THREAD,
-  }
+  };
 }
 
 function addCommentActionCreator(comment) {
@@ -33,7 +33,7 @@ function addCommentActionCreator(comment) {
     payload: {
       comment,
     },
-  }
+  };
 }
 
 function toggleVoteDetailThreadActionCreator({ userId, voteType }) {
@@ -43,7 +43,7 @@ function toggleVoteDetailThreadActionCreator({ userId, voteType }) {
       userId,
       voteType,
     },
-  }
+  };
 }
 
 function toggleVoteCommentActionCreator({ commentId, userId, voteType }) {
@@ -54,67 +54,67 @@ function toggleVoteCommentActionCreator({ commentId, userId, voteType }) {
       userId,
       voteType,
     },
-  }
+  };
 }
 
 function asyncReceiveDetailThread(threadId) {
   return async (dispatch) => {
-    dispatch(clearDetailThreadActionCreator())
-    dispatch(showLoadingActionCreator())
+    dispatch(clearDetailThreadActionCreator());
+    dispatch(showLoadingActionCreator());
     try {
-      const detailThread = await api.getDetailThread(threadId)
-      dispatch(receiveDetailThreadActionCreator(detailThread))
+      const detailThread = await api.getDetailThread(threadId);
+      dispatch(receiveDetailThreadActionCreator(detailThread));
     } catch (error) {
-      alert(error.message)
+      alert(error.message);
     } finally {
-      dispatch(hideLoadingActionCreator())
+      dispatch(hideLoadingActionCreator());
     }
-  }
+  };
 }
 
 function asyncAddComment({ threadId, content }) {
   return async (dispatch) => {
-    dispatch(showLoadingActionCreator())
+    dispatch(showLoadingActionCreator());
     try {
-      const comment = await api.createComment({ threadId, content })
-      dispatch(addCommentActionCreator(comment))
-      return true
+      const comment = await api.createComment({ threadId, content });
+      dispatch(addCommentActionCreator(comment));
+      return true;
     } catch (error) {
-      alert(error.message)
-      return false
+      alert(error.message);
+      return false;
     } finally {
-      dispatch(hideLoadingActionCreator())
+      dispatch(hideLoadingActionCreator());
     }
-  }
+  };
 }
 
 function asyncToggleVoteDetailThread(voteType) {
   return async (dispatch, getState) => {
-    const { authUser, detailThread } = getState()
+    const { authUser, detailThread } = getState();
     if (!authUser) {
-      alert('Silakan masuk terlebih dahulu untuk melakukan vote.')
-      return
+      alert('Silakan masuk terlebih dahulu untuk melakukan vote.');
+      return;
     }
-    if (!detailThread) return
+    if (!detailThread) return;
 
-    const wasUpvoted = detailThread.upVotesBy.includes(authUser.id)
-    const wasDownvoted = detailThread.downVotesBy.includes(authUser.id)
-    const previousVoteType = wasUpvoted ? 1 : wasDownvoted ? -1 : 0
+    const wasUpvoted = detailThread.upVotesBy.includes(authUser.id);
+    const wasDownvoted = detailThread.downVotesBy.includes(authUser.id);
+    const previousVoteType = wasUpvoted ? 1 : wasDownvoted ? -1 : 0;
 
     dispatch(
       toggleVoteDetailThreadActionCreator({
         userId: authUser.id,
         voteType,
       })
-    )
+    );
 
     try {
       if (voteType === 1) {
-        await api.upVoteThread(detailThread.id)
+        await api.upVoteThread(detailThread.id);
       } else if (voteType === -1) {
-        await api.downVoteThread(detailThread.id)
+        await api.downVoteThread(detailThread.id);
       } else {
-        await api.neutralizeVoteThread(detailThread.id)
+        await api.neutralizeVoteThread(detailThread.id);
       }
     } catch (error) {
       dispatch(
@@ -122,27 +122,27 @@ function asyncToggleVoteDetailThread(voteType) {
           userId: authUser.id,
           voteType: previousVoteType,
         })
-      )
-      alert(error.message)
+      );
+      alert(error.message);
     }
-  }
+  };
 }
 
 function asyncToggleVoteComment({ commentId, voteType }) {
   return async (dispatch, getState) => {
-    const { authUser, detailThread } = getState()
+    const { authUser, detailThread } = getState();
     if (!authUser) {
-      alert('Silakan masuk terlebih dahulu untuk melakukan vote.')
-      return
+      alert('Silakan masuk terlebih dahulu untuk melakukan vote.');
+      return;
     }
-    if (!detailThread) return
+    if (!detailThread) return;
 
-    const comment = detailThread.comments.find((c) => c.id === commentId)
-    if (!comment) return
+    const comment = detailThread.comments.find((c) => c.id === commentId);
+    if (!comment) return;
 
-    const wasUpvoted = comment.upVotesBy.includes(authUser.id)
-    const wasDownvoted = comment.downVotesBy.includes(authUser.id)
-    const previousVoteType = wasUpvoted ? 1 : wasDownvoted ? -1 : 0
+    const wasUpvoted = comment.upVotesBy.includes(authUser.id);
+    const wasDownvoted = comment.downVotesBy.includes(authUser.id);
+    const previousVoteType = wasUpvoted ? 1 : wasDownvoted ? -1 : 0;
 
     dispatch(
       toggleVoteCommentActionCreator({
@@ -150,18 +150,18 @@ function asyncToggleVoteComment({ commentId, voteType }) {
         userId: authUser.id,
         voteType,
       })
-    )
+    );
 
     try {
       if (voteType === 1) {
-        await api.upVoteComment({ threadId: detailThread.id, commentId })
+        await api.upVoteComment({ threadId: detailThread.id, commentId });
       } else if (voteType === -1) {
-        await api.downVoteComment({ threadId: detailThread.id, commentId })
+        await api.downVoteComment({ threadId: detailThread.id, commentId });
       } else {
         await api.neutralizeVoteComment({
           threadId: detailThread.id,
           commentId,
-        })
+        });
       }
     } catch (error) {
       dispatch(
@@ -170,10 +170,10 @@ function asyncToggleVoteComment({ commentId, voteType }) {
           userId: authUser.id,
           voteType: previousVoteType,
         })
-      )
-      alert(error.message)
+      );
+      alert(error.message);
     }
-  }
+  };
 }
 
 export {
@@ -187,4 +187,4 @@ export {
   asyncAddComment,
   asyncToggleVoteDetailThread,
   asyncToggleVoteComment,
-}
+};

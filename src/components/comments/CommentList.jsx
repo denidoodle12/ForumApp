@@ -1,4 +1,4 @@
-import CommentItem from './CommentItem'
+import CommentItem from './CommentItem';
 
 function CommentList({ comments = [] }) {
   if (comments.length === 0) {
@@ -6,7 +6,7 @@ function CommentList({ comments = [] }) {
       <div className="empty-comments">
         <p>Belum ada komentar pada diskusi ini. Jadilah yang pertama berkomentar!</p>
       </div>
-    )
+    );
   }
 
   return (
@@ -15,7 +15,7 @@ function CommentList({ comments = [] }) {
         <CommentItem key={comment.id} {...comment} />
       ))}
     </div>
-  )
+  );
 }
 
-export default CommentList
+export default CommentList;

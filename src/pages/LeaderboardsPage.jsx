@@ -1,27 +1,27 @@
-import { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { Trophy, Award, Medal, Zap } from 'lucide-react'
-import { asyncReceiveLeaderboards } from '../states/leaderboards/action'
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Trophy, Award, Medal, Zap } from 'lucide-react';
+import { asyncReceiveLeaderboards } from '../states/leaderboards/action';
 
 function LeaderboardsPage() {
-  const { leaderboards = [], loadingBar = 0 } = useSelector((state) => state)
-  const dispatch = useDispatch()
+  const { leaderboards = [], loadingBar = 0 } = useSelector((state) => state);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(asyncReceiveLeaderboards())
-  }, [dispatch])
+    dispatch(asyncReceiveLeaderboards());
+  }, [dispatch]);
 
   function renderRankIcon(index) {
     if (index === 0) {
-      return <Trophy size={20} className="rank-gold" />
+      return <Trophy size={20} className="rank-gold" />;
     }
     if (index === 1) {
-      return <Medal size={20} className="rank-silver" />
+      return <Medal size={20} className="rank-silver" />;
     }
     if (index === 2) {
-      return <Award size={20} className="rank-bronze" />
+      return <Award size={20} className="rank-bronze" />;
     }
-    return <span className="rank-number">{index + 1}</span>
+    return <span className="rank-number">{index + 1}</span>;
   }
 
   return (
@@ -81,7 +81,7 @@ function LeaderboardsPage() {
         </div>
       )}
     </section>
-  )
+  );
 }
 
-export default LeaderboardsPage
+export default LeaderboardsPage;

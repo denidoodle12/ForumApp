@@ -1,29 +1,29 @@
-import { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { asyncRegisterUser } from '../states/authUser/action'
+import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { asyncRegisterUser } from '../states/authUser/action';
 
 function RegisterPage() {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-  const authUser = useSelector((state) => state.authUser)
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const authUser = useSelector((state) => state.authUser);
 
   useEffect(() => {
     if (authUser) {
-      navigate('/')
+      navigate('/');
     }
-  }, [authUser, navigate])
+  }, [authUser, navigate]);
 
   async function onSubmit(event) {
-    event.preventDefault()
-    const success = await dispatch(asyncRegisterUser({ name, email, password }))
+    event.preventDefault();
+    const success = await dispatch(asyncRegisterUser({ name, email, password }));
     if (success) {
-      alert('Akun berhasil didaftarkan! Silakan masuk.')
-      navigate('/login')
+      alert('Akun berhasil didaftarkan! Silakan masuk.');
+      navigate('/login');
     }
   }
 
@@ -96,7 +96,7 @@ function RegisterPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default RegisterPage
+export default RegisterPage;

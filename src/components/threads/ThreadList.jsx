@@ -1,8 +1,8 @@
-import { useSelector } from 'react-redux'
-import ThreadItem from './ThreadItem'
+import { useSelector } from 'react-redux';
+import ThreadItem from './ThreadItem';
 
 function ThreadList({ threads = [] }) {
-  const loadingBar = useSelector((state) => state.loadingBar)
+  const loadingBar = useSelector((state) => state.loadingBar);
 
   if (threads.length === 0) {
     return (
@@ -13,7 +13,7 @@ function ThreadList({ threads = [] }) {
             : 'Tidak ada diskusi yang ditemukan.'}
         </p>
       </div>
-    )
+    );
   }
 
   return (
@@ -22,7 +22,7 @@ function ThreadList({ threads = [] }) {
         <ThreadItem key={thread.id} {...thread} />
       ))}
     </div>
-  )
+  );
 }
 
-export default ThreadList
+export default ThreadList;

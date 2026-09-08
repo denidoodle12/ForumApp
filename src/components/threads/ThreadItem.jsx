@@ -1,9 +1,9 @@
-import { Link } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { MessageSquare, Tag } from 'lucide-react'
-import { postedAt } from '../../utils'
-import { asyncToggleVoteThread } from '../../states/threads/action'
-import VoteButton from './VoteButton'
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { MessageSquare, Tag } from 'lucide-react';
+import { postedAt } from '../../utils';
+import { asyncToggleVoteThread } from '../../states/threads/action';
+import VoteButton from './VoteButton';
 
 function ThreadItem({
   id,
@@ -16,25 +16,25 @@ function ThreadItem({
   totalComments = 0,
   user,
 }) {
-  const authUser = useSelector((state) => state.authUser)
-  const dispatch = useDispatch()
+  const authUser = useSelector((state) => state.authUser);
+  const dispatch = useDispatch();
 
-  const strippedBody = body.replace(/<[^>]*>?/gm, '')
+  const strippedBody = body.replace(/<[^>]*>?/gm, '');
   const snippet =
     strippedBody.length > 180
       ? `${strippedBody.substring(0, 180)}...`
-      : strippedBody
+      : strippedBody;
 
   function onUpVote() {
-    dispatch(asyncToggleVoteThread({ threadId: id, voteType: 1 }))
+    dispatch(asyncToggleVoteThread({ threadId: id, voteType: 1 }));
   }
 
   function onDownVote() {
-    dispatch(asyncToggleVoteThread({ threadId: id, voteType: -1 }))
+    dispatch(asyncToggleVoteThread({ threadId: id, voteType: -1 }));
   }
 
   function onNeutralize() {
-    dispatch(asyncToggleVoteThread({ threadId: id, voteType: 0 }))
+    dispatch(asyncToggleVoteThread({ threadId: id, voteType: 0 }));
   }
 
   return (
@@ -85,7 +85,7 @@ function ThreadItem({
         </div>
       </div>
     </article>
-  )
+  );
 }
 
-export default ThreadItem
+export default ThreadItem;
