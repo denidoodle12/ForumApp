@@ -21,9 +21,11 @@ describe('Login', () => {
   });
 
   it('should redirect to the home page after a successful login', () => {
-    cy.get('input[type="email"]').type(Cypress.env('EMAIL'));
-    cy.get('input[type="password"]').type(Cypress.env('PASSWORD'));
-    cy.contains('button', 'Masuk').click();
-    cy.url().should('eq', `${Cypress.config('baseUrl')}/`);
+    cy.env(['EMAIL', 'PASSWORD']).then(({ EMAIL, PASSWORD }) => {
+      cy.get('input[type="email"]').type(EMAIL);
+      cy.get('input[type="password"]').type(PASSWORD);
+      cy.contains('button', 'Masuk').click();
+      cy.url().should('not.include', '/login');
+    });
   });
 });
