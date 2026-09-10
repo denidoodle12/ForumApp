@@ -13,3 +13,5 @@ dist-ssr
 *.sw?
 *.md
 !README.md
+cypress/videos
+cypress/screenshots
