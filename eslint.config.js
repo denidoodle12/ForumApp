@@ -38,4 +38,22 @@ export default [
       'react/prop-types': 'off',
     },
   },
+  {
+    files: ['cypress/**/*.cy.js'],
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        cy: 'readonly',
+        Cypress: 'readonly',
+        describe: 'readonly',
+        it: 'readonly',
+        before: 'readonly',
+        beforeEach: 'readonly',
+        after: 'readonly',
+        afterEach: 'readonly',
+        expect: 'readonly',
+        context: 'readonly',
+      },
+    },
+  },
 ];

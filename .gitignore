@@ -15,3 +15,4 @@ dist-ssr
 !README.md
 cypress/videos
 cypress/screenshots
+cypress.env.json
