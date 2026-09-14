@@ -5,7 +5,15 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 import globals from 'globals';
 
 export default [
-  { ignores: ['dist', 'node_modules'] },
+  {
+    ignores: [
+      'dist',
+      'node_modules',
+      'storybook-static',
+      'cypress/screenshots',
+      'cypress/videos',
+    ],
+  },
   daStyle,
   {
     files: ['**/*.{js,jsx}'],
@@ -53,6 +61,14 @@ export default [
         afterEach: 'readonly',
         expect: 'readonly',
         context: 'readonly',
+      },
+    },
+  },
+  {
+    files: ['scripts/**/*.js'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
       },
     },
   },

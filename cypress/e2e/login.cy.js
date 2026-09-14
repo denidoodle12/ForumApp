@@ -8,6 +8,7 @@ describe('Login', () => {
   beforeEach(() => {
     cy.clearLocalStorage();
     cy.visit('/login');
+    cy.get('input[type="email"]', { timeout: 15000 }).should('be.visible');
   });
 
   it('should display the login page with email, password inputs and submit button', () => {
@@ -33,19 +34,32 @@ describe('Login', () => {
   });
 
   it('should redirect to the home page after a successful login', () => {
+    const testUser = {
+      name: 'Cypress Test User',
+      email: `cypress-${Date.now()}@example.com`,
+      password: 'password123',
+    };
+
     cy.intercept('POST', '**/v1/login').as('loginRequest');
     cy.intercept('GET', '**/v1/users/me').as('profileRequest');
 
-    cy.env(['EMAIL', 'PASSWORD']).then(({ EMAIL, PASSWORD }) => {
-      expect(EMAIL, 'Cypress login email').to.be.a('string').and.not.be.empty;
-      expect(PASSWORD, 'Cypress login password').to.be.a('string').and.not.be.empty;
+    cy.request({
+      method: 'POST',
+      url: 'https://forum-api.dicoding.dev/v1/register',
+      body: testUser,
+    })
+      .its('body.status')
+      .should('equal', 'success');
 
-      cy.get('input[type="email"]').type(EMAIL);
-      cy.get('input[type="password"]').type(PASSWORD);
-      cy.contains('button', 'Masuk').click();
-      cy.wait('@loginRequest').its('response.body.status').should('equal', 'success');
-      cy.wait('@profileRequest').its('response.body.status').should('equal', 'success');
-      cy.location('pathname').should('equal', '/');
-    });
+    cy.get('input[type="email"]').type(testUser.email);
+    cy.get('input[type="password"]').type(testUser.password);
+    cy.contains('button', 'Masuk').click();
+    cy.wait('@loginRequest')
+      .its('response.body.status')
+      .should('equal', 'success');
+    cy.wait('@profileRequest')
+      .its('response.body.status')
+      .should('equal', 'success');
+    cy.location('pathname').should('equal', '/');
   });
 });
