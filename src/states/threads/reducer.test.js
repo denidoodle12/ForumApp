@@ -2,6 +2,15 @@ import { describe, it, expect } from 'vitest';
 import threadsReducer from './reducer';
 import { ActionType } from './action';
 
+/**
+ * Test scenarios for threadsReducer:
+ * - returns the initial state for an unknown action
+ * - receives a collection of threads
+ * - prepends a newly created thread
+ * - applies an upvote and removes an existing downvote
+ * - applies a downvote and removes an existing upvote
+ * - removes both votes when a vote is neutralized
+ */
 const fakeThread = {
   id: 'thread-1',
   title: 'Thread Pertama',

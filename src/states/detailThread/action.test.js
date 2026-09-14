@@ -10,6 +10,16 @@ import api from '../../api/dicodingForum';
 
 vi.mock('../../api/dicodingForum');
 
+/**
+ * Test scenarios for detail thread thunks:
+ * - receives a thread detail when the API request succeeds
+ * - handles an error while receiving a thread detail
+ * - adds a comment when the API request succeeds
+ * - handles an error while adding a comment
+ * - reverts an optimistic detail thread vote when the API request fails
+ * - prevents an unauthenticated user from voting
+ * - keeps an optimistic detail thread vote when the API request succeeds
+ */
 const fakeDetailThread = {
   id: 'thread-1',
   title: 'Thread Pertama',

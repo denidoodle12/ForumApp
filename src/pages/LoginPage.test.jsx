@@ -7,6 +7,12 @@ import { configureStore } from '@reduxjs/toolkit';
 import LoginPage from './LoginPage';
 import authUserReducer from '../states/authUser/reducer';
 
+/**
+ * Test scenarios for LoginPage:
+ * - renders the login form
+ * - updates the email value from user input
+ * - updates the password value from user input
+ */
 function buildStore() {
   return configureStore({
     reducer: {

@@ -3,6 +3,13 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import VoteButton from './VoteButton';
 
+/**
+ * Test scenarios for VoteButton:
+ * - renders upvote and downvote totals
+ * - calls the upvote handler for a new upvote
+ * - calls the neutralize handler for an existing upvote
+ * - calls the downvote handler for a new downvote
+ */
 describe('VoteButton', () => {
   it('should render the correct upvote and downvote counts', () => {
     render(

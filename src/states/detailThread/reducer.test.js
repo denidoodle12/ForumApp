@@ -2,6 +2,14 @@ import { describe, it, expect } from 'vitest';
 import detailThreadReducer from './reducer';
 import { ActionType } from './action';
 
+/**
+ * Test scenarios for detailThreadReducer:
+ * - returns null for an unknown action
+ * - receives and clears a thread detail
+ * - prepends a newly created comment
+ * - applies and neutralizes votes on a thread detail
+ * - applies upvotes and downvotes on a comment
+ */
 const fakeDetailThread = {
   id: 'thread-1',
   title: 'Thread Pertama',

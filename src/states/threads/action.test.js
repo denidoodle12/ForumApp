@@ -11,6 +11,15 @@ import api from '../../api/dicodingForum';
 
 vi.mock('../../api/dicodingForum');
 
+/**
+ * Test scenarios for thread thunks:
+ * - populates users and threads when API requests succeed
+ * - handles an error while populating users and threads
+ * - adds a thread when the API request succeeds
+ * - handles an error while adding a thread
+ * - reverts an optimistic thread vote when the API request fails
+ * - prevents an unauthenticated user from voting
+ */
 const fakeThread = {
   id: 'thread-1',
   title: 'Thread Pertama',

@@ -6,6 +6,12 @@ import { configureStore } from '@reduxjs/toolkit';
 import ThreadItem from './ThreadItem';
 import authUserReducer from '../../states/authUser/reducer';
 
+/**
+ * Test scenarios for ThreadItem:
+ * - renders the title, body snippet, and author
+ * - renders a category when provided
+ * - hides the category when it is empty
+ */
 const fakeThread = {
   id: 'thread-1',
   title: 'Judul Thread Pertama',
