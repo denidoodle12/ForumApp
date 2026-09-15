@@ -5,7 +5,15 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 import globals from 'globals';
 
 export default [
-  { ignores: ['dist', 'node_modules'] },
+  {
+    ignores: [
+      'dist',
+      'node_modules',
+      'storybook-static',
+      'cypress/screenshots',
+      'cypress/videos',
+    ],
+  },
   daStyle,
   {
     files: ['**/*.{js,jsx}'],
@@ -36,6 +44,32 @@ export default [
         { allowConstantExport: true },
       ],
       'react/prop-types': 'off',
+    },
+  },
+  {
+    files: ['cypress/**/*.cy.js'],
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        cy: 'readonly',
+        Cypress: 'readonly',
+        describe: 'readonly',
+        it: 'readonly',
+        before: 'readonly',
+        beforeEach: 'readonly',
+        after: 'readonly',
+        afterEach: 'readonly',
+        expect: 'readonly',
+        context: 'readonly',
+      },
+    },
+  },
+  {
+    files: ['scripts/**/*.js'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
     },
   },
 ];

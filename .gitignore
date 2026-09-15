@@ -13,3 +13,7 @@ dist-ssr
 *.sw?
 *.md
 !README.md
+cypress/videos
+cypress/screenshots
+cypress.env.json
+storybook-static
